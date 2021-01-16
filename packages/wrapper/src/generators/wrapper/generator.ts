@@ -1,13 +1,14 @@
 import {
-  addProjectConfiguration,
   formatFiles,
   generateFiles,
   getWorkspaceLayout,
+  installPackagesTask,
   names,
   offsetFromRoot,
   Tree,
 } from '@nrwl/devkit';
 import * as path from 'path';
+import { applicationGenerator } from '@nrwl/nest';
 import { WrapperGeneratorSchema } from './schema';
 
 interface NormalizedSchema extends WrapperGeneratorSchema {
@@ -57,17 +58,15 @@ function addFiles(host: Tree, options: NormalizedSchema) {
 
 export default async function (host: Tree, options: WrapperGeneratorSchema) {
   const normalizedOptions = normalizeOptions(host, options);
-  addProjectConfiguration(host, normalizedOptions.projectName, {
-    root: normalizedOptions.projectRoot,
-    projectType: 'library',
-    sourceRoot: `${normalizedOptions.projectRoot}/src`,
-    targets: {
-      build: {
-        executor: '@nx11-plugin/wrapper:build',
-      },
-    },
-    tags: normalizedOptions.parsedTags,
+  await applicationGenerator(host, {
+    name: options.name,
+    directory: options.directory,
+    tags: options.tags,
   });
   addFiles(host, normalizedOptions);
   await formatFiles(host);
+
+  return () => {
+    installPackagesTask(host);
+  };
 }

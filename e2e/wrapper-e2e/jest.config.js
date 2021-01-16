@@ -1,4 +1,8 @@
 module.exports = {
+
+  testEnvironment: 'node',
+  testTimeout: 60000,
+
   displayName: 'wrapper-e2e',
   preset: '../../jest.preset.js',
   globals: {

@@ -32,6 +32,7 @@
     "@nrwl/devkit": "11.1.5",
     "@nrwl/eslint-plugin-nx": "11.1.5",
     "@nrwl/jest": "11.1.5",
+    "@nrwl/nest": "^11.1.5",
     "@nrwl/nx-plugin": "^11.1.5",
     "@nrwl/tao": "11.1.5",
     "@nrwl/workspace": "11.1.5",

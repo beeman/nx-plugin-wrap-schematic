@@ -7,13 +7,12 @@ import {
 } from '@nrwl/nx-plugin/testing';
 describe('wrapper e2e', () => {
   it('should create wrapper', async (done) => {
-    const plugin = uniq('wrapper');
+    const app = uniq('wrapper');
     ensureNxProject('@nx11-plugin/wrapper', 'dist/packages/wrapper');
-    await runNxCommandAsync(`generate @nx11-plugin/wrapper:wrapper ${plugin}`);
+    await runNxCommandAsync(`generate @nx11-plugin/wrapper:wrapper ${app}`);
 
-    const result = await runNxCommandAsync(`build ${plugin}`);
-    expect(result.stdout).toContain('Executor ran');
-
+    await runNxCommandAsync(`build ${app}`);
+    expect(() => checkFilesExist(`apps/${app}/src/main.ts`)).not.toThrow();
     done();
   });
 
