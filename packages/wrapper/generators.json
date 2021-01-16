@@ -1,0 +1,12 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "name": "wrapper",
+  "version": "0.0.1",
+  "generators": {
+    "wrapper": {
+      "factory": "./src/generators/wrapper/generator",
+      "schema": "./src/generators/wrapper/schema.json",
+      "description": "wrapper generator"
+    }
+  }
+}

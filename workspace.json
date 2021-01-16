@@ -1,0 +1,79 @@
+{
+  "version": 2,
+  "projects": {
+    "wrapper": {
+      "root": "packages/wrapper",
+      "sourceRoot": "packages/wrapper/src",
+      "projectType": "library",
+      "targets": {
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "packages/wrapper/**/*.ts"
+            ]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": [
+            "coverage/packages/wrapper"
+          ],
+          "options": {
+            "jestConfig": "packages/wrapper/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "build": {
+          "executor": "@nrwl/node:package",
+          "outputs": [
+            "{options.outputPath}"
+          ],
+          "options": {
+            "outputPath": "dist/packages/wrapper",
+            "tsConfig": "packages/wrapper/tsconfig.lib.json",
+            "packageJson": "packages/wrapper/package.json",
+            "main": "packages/wrapper/src/index.ts",
+            "assets": [
+              "packages/wrapper/*.md",
+              {
+                "input": "./packages/wrapper/src",
+                "glob": "**/*.!(ts)",
+                "output": "./src"
+              },
+              {
+                "input": "./packages/wrapper",
+                "glob": "generators.json",
+                "output": "."
+              },
+              {
+                "input": "./packages/wrapper",
+                "glob": "executors.json",
+                "output": "."
+              }
+            ]
+          }
+        }
+      }
+    },
+    "wrapper-e2e": {
+      "projectType": "application",
+      "root": "e2e/wrapper-e2e",
+      "sourceRoot": "e2e/wrapper-e2e/src",
+      "targets": {
+        "e2e": {
+          "executor": "@nrwl/nx-plugin:e2e",
+          "options": {
+            "target": "wrapper:build",
+            "npmPackageName": "@nx11-plugin/wrapper",
+            "pluginOutputPath": "dist/packages/wrapper",
+            "jestConfig": "e2e/wrapper-e2e/jest.config.js"
+          }
+        }
+      }
+    }
+  },
+  "cli": {
+    "defaultCollection": "@nrwl/workspace"
+  }
+}
